@@ -1,0 +1,32 @@
+[home]
+account = "0x842eb2142c5aa1260954f07aae39ddee1640c3a7"
+ipc = "/home/koal/parity/PoA_home/jsonrpc.ipc"
+required_confirmations = 0
+poll_interval = 2
+request_timeout = 360
+
+[home.contract]
+bin = "contracts/HomeBridge.bin"
+
+[foreign]
+account = "0xf3ee321df87781864f46f6464e764c2827fca73b"
+ipc = "/home/koal/parity/PoA_foreign/jsonrpc.ipc"
+required_confirmations = 0
+poll_interval = 2
+request_timeout = 360
+
+[foreign.contract]
+bin = "contracts/ForeignBridge.bin"
+
+[authorities]
+accounts = [
+	"0xf3ee321df87781864f46f6464e764c2827fca73b"
+]
+required_signatures = 1
+
+[transactions]
+home_deploy = { gas = 3000000, gas_price = 18000000000 }
+foreign_deploy = { gas = 3000000, gas_price = 18000000000 }
+deposit_relay = { gas = 120000, gas_price = 18000000000 }
+withdraw_confirm = { gas = 120000, gas_price = 18000000000 }
+withdraw_relay = { gas = 300000, gas_price = 18000000000 }

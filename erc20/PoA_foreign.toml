@@ -1,0 +1,29 @@
+[parity]
+chain = "/home/koal/parity/PoA_foreign.json"
+base_path = "/home/koal/parity/PoA_foreign"
+keys_path = "/home/koal/parity/keys"
+
+[network]
+port = 30343
+nat = "none"
+
+[rpc]
+port = 48545
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+cors = "all"
+hosts = ["all"]
+
+[ui]
+port = 48180
+force = true
+
+[websockets]
+port = 48546
+
+[account]
+unlock = ["0xf3ee321df87781864f46f6464e764c2827fca73b"]
+password = ["/home/koal/parity/keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
+
+[mining]
+engine_signer = "0xf3ee321df87781864f46f6464e764c2827fca73b"
+reseal_on_txs = "none"
