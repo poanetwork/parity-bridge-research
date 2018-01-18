@@ -11,14 +11,14 @@ _abiFile=_contractName+".abi"
 
 _IPC_file = '/home/koal/parity/PoA_foreign/jsonrpc.ipc'
 web3 = Web3(Web3.IPCProvider(_IPC_file))
-_actor = "0xf3ee321df87781864f46f6464e764c2827fca73b"
+_actor = "0xf3Ee321Df87781864f46F6464e764c2827FCa73B"
 _gasPrice = web3.toWei(18, 'gwei')
 
 _txTempl={'from': _actor, 'gasPrice': _gasPrice}
 
 if (len(sys.argv) == 2):
     contractAddress = sys.argv[1]
-    tokensRecipient = "0x554e8f65d58621cbaa1806c96898ea1b1d9c4ec1"
+    tokensRecipient = "0x554E8f65d58621cBAa1806C96898Ea1b1D9C4EC1"
 else:
     sys.exit(1)
 
@@ -40,12 +40,12 @@ ContractFactory = web3.eth.contract(
 
 BridgeContract = ContractFactory(contractAddress)
 
-tokenAmount = web3.toWei(randint(100, 2000), 'finney')
-fakeTxHash = web3.sha3('0x'+tokenAmount.to_bytes(32, byteorder='big').hex())
+tokenAmount = web3.toWei(randint(100, 900), 'finney')
+fakeTxHash = web3.sha3(tokenAmount.to_bytes(32, byteorder='big'))
 
 print("Deposit " + str(tokenAmount) + ' tokens')
 
-txHash = BridgeContract.transact(transaction=_txTempl).deposit(tokensRecipient, tokenAmount, bytes.fromhex(fakeTxHash[2:]))
+txHash = BridgeContract.transact(transaction=_txTempl).deposit(tokensRecipient, tokenAmount, fakeTxHash)
 wait_for_transaction_receipt(web3, txHash)
 
 sys.exit(0)

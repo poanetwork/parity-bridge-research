@@ -10,7 +10,7 @@ _abiFile=_contractName+".abi"
 
 _IPC_file = '/home/koal/parity/PoA_foreign/jsonrpc.ipc'
 web3 = Web3(Web3.IPCProvider(_IPC_file))
-_actor = "0xf3ee321df87781864f46f6464e764c2827fca73b"
+_actor = "0xf3Ee321Df87781864f46F6464e764c2827FCa73B"
 _gasPrice = web3.toWei(18, 'gwei')
 
 _txTempl={'from': _actor, 'gasPrice': _gasPrice}
