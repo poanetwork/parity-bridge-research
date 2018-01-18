@@ -1,3 +1,5 @@
+estimated_gas_cost_of_withdraw = 0
+
 [home]
 account = "0x842eb2142c5aa1260954f07aae39ddee1640c3a7"
 ipc = "/home/koal/parity/PoA_home/jsonrpc.ipc"
@@ -27,6 +29,6 @@ required_signatures = 1
 [transactions]
 home_deploy = { gas = 3000000, gas_price = 18000000000 }
 foreign_deploy = { gas = 3000000, gas_price = 18000000000 }
-deposit_relay = { gas = 120000, gas_price = 18000000000 }
-withdraw_confirm = { gas = 120000, gas_price = 18000000000 }
-withdraw_relay = { gas = 300000, gas_price = 18000000000 }
+deposit_relay = { gas = 1200000, gas_price = 18000000000 }
+withdraw_confirm = { gas = 3000000, gas_price = 18000000000 }
+withdraw_relay = { gas = 3000000, gas_price = 18000000000 }
