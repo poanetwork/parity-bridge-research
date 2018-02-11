@@ -3,23 +3,30 @@
 from web3 import Web3
 from web3.utils.transactions import wait_for_transaction_receipt
 import json
+from toml import load
 import sys
 
 _contractName='ForeignBridge'
 _abiFile=_contractName+".abi"
 
-_IPC_file = '/home/koal/parity/PoA_foreign/jsonrpc.ipc'
-web3 = Web3(Web3.IPCProvider(_IPC_file))
-_actor = "0xf3Ee321Df87781864f46F6464e764c2827FCa73B"
-_gasPrice = web3.toWei(18, 'gwei')
+test_env_db = '/home/koal/parity/bridge/test_env_db.toml'
+try:
+    test_env = load(test_env_db)
+except:
+    sys.exit(1)
 
+bridge_config = load('/home/koal/parity/bridge/erc20.toml')
+bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
+
+_IPC_file = bridge_config['foreign']['ipc']
+web3 = Web3(Web3.IPCProvider(_IPC_file))
+
+_actor       = web3.toChecksumAddress(bridge_config['foreign']['account'])
+_gasPrice    = bridge_config['transactions']['foreign_deploy']['gas_price']
 _txTempl={'from': _actor, 'gasPrice': _gasPrice}
 
-if (len(sys.argv) == 3):
-    contractAddress = sys.argv[1]
-    erc20ContractAddress = sys.argv[2]
-else:
-    sys.exit(1)
+bridgeContractAddress = web3.toChecksumAddress(bridge_db['foreign_contract_address'])
+tokenContractAddress = web3.toChecksumAddress(test_env['token_contract_address'])
 
 #----------------------------------------------------------------------------
 # Read ABI
@@ -37,11 +44,14 @@ ContractFactory = web3.eth.contract(
 # machine where validator is run.
 #web3.personal.unlockAccount(actor, "11", 30)
 
-BridgeContract = ContractFactory(contractAddress)
+BridgeContract = ContractFactory(bridgeContractAddress)
 
 print("Set contract address...")
 
-txHash = BridgeContract.transact(transaction=_txTempl).setTokenAddress(erc20ContractAddress)
+txHash = BridgeContract.transact(transaction=_txTempl).setTokenAddress(tokenContractAddress)
 wait_for_transaction_receipt(web3, txHash)
+
+print("Check that new configuration reflected in the contract...")
+print("ERC20 token used by bridge:", BridgeContract.call().erc20token())
 
 sys.exit(0)
