@@ -10,7 +10,6 @@ ERC20 token testing
 1. run parity:
    * `PoA_home*` are for the left side of the bridge,
    * `PoA_foreign*` are for the right side of the bridge
-   Environment description:
    * bridge account for PoA_home: `0x842eb2142c5aa1260954f07aae39ddee1640c3a7`
    * bridge account for PoA_foreign: `0xf3ee321df87781864f46f6464e764c2827fca73b`
    * actor to deposit and withdraw on both sides: `0x37a30534da3d53aa1867adde26e114a3161b2b12`
