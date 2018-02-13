@@ -7,7 +7,9 @@ Set of artifacts to investigate behavior of parity-bridge
 ERC20 token testing
 ----
 
-1. run parity:
+The steps below assume that paths corrected in corresponding files.
+
+1. run parity (`start_PoA_home.sh` and `start_PoA_foreign.sh`):
    * `PoA_home*` are for the left side of the bridge,
    * `PoA_foreign*` are for the right side of the bridge
    * bridge account for PoA_home: `0x842eb2142c5aa1260954f07aae39ddee1640c3a7`
