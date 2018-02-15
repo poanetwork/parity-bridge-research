@@ -17,8 +17,8 @@ bridge_config = load('/home/koal/parity/bridge/erc20.toml')
 bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
 
 _IPC_file = bridge_config['home']['ipc']
-#web3 = Web3(Web3.IPCProvider(_IPC_file))
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:38545"))
+web3 = Web3(Web3.IPCProvider(_IPC_file))
+#web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:38545"))
 
 _gasPrice    = bridge_config['transactions']['withdraw_relay']['gas_price']
 
@@ -37,9 +37,7 @@ tx = {'from': actor, 'to': bridgeContractAddress, 'value': value ,'gasPrice': _g
 
 print("Sending", value, "to Home bridge")
 
-web3.personal.unlockAccount(actor, "11", "0x5")
-
-txHash = web3.eth.sendTransaction(tx)
+txHash = web3.personal.sendTransaction(tx, "11")
 wait_for_transaction_receipt(web3, txHash)
 
 print("TX:", txHash.hex())

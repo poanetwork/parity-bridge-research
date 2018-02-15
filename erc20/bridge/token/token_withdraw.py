@@ -19,9 +19,9 @@ except:
 bridge_config = load('/home/koal/parity/bridge/erc20.toml')
 bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
 
-#_IPC_file = bridge_config['home']['ipc']
-#web3 = Web3(Web3.IPCProvider(_IPC_file))
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:48545"))
+_IPC_file = bridge_config['foreign']['ipc']
+web3 = Web3(Web3.IPCProvider(_IPC_file))
+#web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:48545"))
 
 _gasPrice    = bridge_config['transactions']['withdraw_confirm']['gas_price']
 
@@ -52,14 +52,22 @@ ContractFactory = web3.eth.contract(
 
 TokenContract = ContractFactory(tokenContractAddress)
 
-balance = TokenContract.call().balanceOf(actor)
+balance = TokenContract.functions.balanceOf(actor).call()
 value = randint(balance // 4, balance // 2)
 
 print("Sending", value, "to Home bridge")
 
-web3.personal.unlockAccount(actor, "11", "0x5")
+#web3.personal.unlockAccount(actor, "11", "0x5")
 
-txHash = TokenContract.transact({'from': actor, 'gasPrice': _gasPrice}).approveAndCall(bridgeContractAddress, value, b'')
+txTmpl = {'from': actor, 
+          'gasPrice': _gasPrice}
+
+txToSend = TokenContract.functions.approveAndCall(bridgeContractAddress, value, b'').buildTransaction(txTmpl)
+
+# This is needed since sendTransaction does not expect this argument parameter and does not skip it by some reason 
+txToSend.pop('chainId', None)
+
+txHash = web3.personal.sendTransaction(txToSend, "11")
 wait_for_transaction_receipt(web3, txHash)
 
 print("TX:", txHash.hex())
