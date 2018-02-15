@@ -9,6 +9,8 @@ ERC20 token testing
 
 The steps below assume that paths corrected in corresponding files.
 
+__The steps below were tested on with Parity 1.9.2 and web3.py 4.0.0b9__
+
 1. run parity (`start_PoA_home.sh` and `start_PoA_foreign.sh`):
    * `PoA_home*` are for the left side of the bridge,
    * `PoA_foreign*` are for the right side of the bridge
