@@ -74,13 +74,13 @@ TokenContract = ContractFactory(contractAddress)
 # delegate rights to mint tokens
 print("Set minting permissions...")
 
-txHash = TokenContract.transact(transaction=_txTempl).setMintAgent(_actor, True)
+txHash = TokenContract.functions.setMintAgent(_actor, True).transact(transaction=_txTempl)
 wait_for_transaction_receipt(web3, txHash)
 
 # mint few tokens
 print("Mint tokens and transfer to the bridge contract " + bridgeContractAddress)
 
-txHash = TokenContract.transact(transaction=_txTempl).mint(bridgeContractAddress, _tokenAmount)
+txHash = TokenContract.functions.mint(bridgeContractAddress, _tokenAmount).transact(transaction=_txTempl)
 wait_for_transaction_receipt(web3, txHash)
 
 # Store test environment configuration only in case of successful setup

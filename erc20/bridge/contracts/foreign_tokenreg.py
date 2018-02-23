@@ -48,10 +48,10 @@ BridgeContract = ContractFactory(bridgeContractAddress)
 
 print("Set contract address...")
 
-txHash = BridgeContract.transact(transaction=_txTempl).setTokenAddress(tokenContractAddress)
+txHash = BridgeContract.functions.setTokenAddress(tokenContractAddress).transact(transaction=_txTempl)
 wait_for_transaction_receipt(web3, txHash)
 
 print("Check that new configuration reflected in the contract...")
-print("ERC20 token used by bridge:", BridgeContract.call().erc20token())
+print("ERC20 token used by bridge:", BridgeContract.functions.erc20token().call())
 
 sys.exit(0)

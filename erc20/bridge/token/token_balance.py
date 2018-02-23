@@ -46,7 +46,7 @@ ContractFactory = web3.eth.contract(
 TokenContract = ContractFactory(tokenContractAddress)
 
 for i in addresses:
-    balance = TokenContract.call().balanceOf(i)
+    balance = TokenContract.functions.balanceOf(i).call()
     print(i, ":", balance)
 
 sys.exit(0)
