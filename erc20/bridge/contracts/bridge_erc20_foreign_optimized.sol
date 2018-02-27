@@ -199,10 +199,10 @@ library MessageTest {
 /// and ForeignBridge addresses and request block deployed from the contracts
 /// in order to  generate correct database file. 
 contract BridgeDeploymentAddressStorage {
-    uint256 public blockDeployed;
+    uint256 public deployedAtBlock;
 
     function BridgeDeploymentAddressStorage() public {
-        blockDeployed = block.number;
+        deployedAtBlock = block.number;
     }
 }
 
