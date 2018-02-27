@@ -2,8 +2,8 @@
 
 solc='/opt/ethereum-go/bin/solc'
 
-h_contract="HomeBridge"
-f_contract="ForeignBridge"
+h_contract="HomeBridge\."
+f_contract="ForeignBridge\."
 
 rm *.bin
 rm *.abi
