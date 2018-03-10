@@ -55,7 +55,7 @@ TokenContract = ContractFactory(tokenContractAddress)
 balance = TokenContract.functions.balanceOf(actor).call()
 value = randint(balance // 4, balance // 2)
 
-print("Sending", value, "to Home bridge")
+print("Withdraw", value, "from Foreign bridge")
 
 #web3.personal.unlockAccount(actor, "11", "0x5")
 
