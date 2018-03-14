@@ -7,7 +7,13 @@ import json
 import sys
 import hexbytes
 
-bridge_config = load('/home/koal/parity/bridge/erc20.toml')
+test_env_db = '/home/koal/parity/bridge/test_env_db.toml'
+try:
+    test_env = load(test_env_db)
+except:
+    sys.exit(1)
+
+bridge_config = load(test_env['bridge_config'])
 
 _IPC_file = bridge_config['home']['ipc']
 web3 = Web3(Web3.IPCProvider(_IPC_file))

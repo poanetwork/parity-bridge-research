@@ -15,10 +15,10 @@ test_env_db = '/home/koal/parity/bridge/test_env_db.toml'
 try:
     test_env = load(test_env_db)
 except:
-    test_env = {}
+    sys.exit(1)
 
-bridge_config = load('/home/koal/parity/bridge/erc20.toml')
-bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
+bridge_config = load(test_env['bridge_config'])
+bridge_db     = load(test_env['bridge_db'])
 
 _IPC_file = bridge_config['foreign']['ipc']
 web3 = Web3(Web3.IPCProvider(_IPC_file))

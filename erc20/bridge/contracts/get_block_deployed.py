@@ -8,8 +8,14 @@ import sys
 _contractName='ForeignBridge'
 _abiFile=_contractName+".abi"
 
-bridge_config = load('/home/koal/parity/bridge/erc20.toml')
-bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
+test_env_db = '/home/koal/parity/bridge/test_env_db.toml'
+try:
+    test_env = load(test_env_db)
+except:
+    sys.exit(1)
+
+bridge_config = load(test_env['bridge_config'])
+bridge_db     = load(test_env['bridge_db'])
 
 def getBlockNumber(_chain):
     IPC_file = bridge_config[_chain]['ipc']
