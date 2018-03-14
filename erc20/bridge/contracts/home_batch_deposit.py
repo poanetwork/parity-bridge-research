@@ -1,7 +1,6 @@
 #!/opt/anaconda3/bin/python
 
 from web3 import Web3
-from web3.utils.transactions import wait_for_transaction_receipt
 import json
 from toml import load
 import sys
@@ -13,16 +12,16 @@ try:
 except:
     sys.exit(1)
 
-bridge_config = load('/home/koal/parity/bridge/erc20.toml')
-bridge_db     = load('/home/koal/parity/bridge/erc20_db.toml')
+bridge_config = load(test_env['bridge_config'])
+bridge_db     = load(test_env['bridge_db'])
 
-keystore = '/home/koal/parity/keys/PoA_home/UTC--2018-01-11T21-55-28Z--8437ae14-1e28-75d3-4512-a60d63dbfb64'
+keystore = test_env['actor_keystore']
 
 _IPC_file = bridge_config['home']['ipc']
 web3 = Web3(Web3.IPCProvider(_IPC_file))
-#web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:38545"))
 
-_gasPrice    = bridge_config['transactions']['withdraw_relay']['gas_price']
+gasPrice    = bridge_config['transactions']['withdraw_relay']['gas_price']
+gasLimit    = 50000
 
 bridgeContractAddress = web3.toChecksumAddress(bridge_db['home_contract_address'])
 
@@ -34,8 +33,8 @@ else:
 net_id = int(web3.version.network)
 txTmpl = {
           'to': bridgeContractAddress,
-          'gas': 30000,
-          'gasPrice': _gasPrice,
+          'gas': gasLimit,
+          'gasPrice': gasPrice,
           'chainId': net_id
          }
 
@@ -57,7 +56,7 @@ for i in range(0, txNum):
     tx = txTmpl.copy()
     tx['nonce'] = op_num + i
 
-    value = web3.toWei(randint(700, 5000), 'szabo')
+    value = web3.toWei(10, 'szabo')
     tx['value'] = value
 
     signed = actor.signTransaction(tx)
