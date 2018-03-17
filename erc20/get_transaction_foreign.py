@@ -34,7 +34,7 @@ class ReceiptEncoder(json.JSONEncoder):
          return json.JSONEncoder.default(self, obj)
 
 #print(type(dict(web3.eth.getTransactionReceipt(txHash))['blockHash']))
-print(json.dumps(dict(web3.eth.getTransactionReceipt(txHash)), cls=ReceiptEncoder, indent=2))
+print(json.dumps(dict(web3.eth.getTransaction(txHash)), cls=ReceiptEncoder, indent=2))
 #print(json.dumps(dict(web3.eth.getTransactionReceipt(txHash))))
 
 sys.exit(0)
