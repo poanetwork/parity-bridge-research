@@ -1,4 +1,4 @@
-estimated_gas_cost_of_withdraw = "0"
+estimated_gas_cost_of_withdraw = 0
 #max_total_home_contract_balance = "10000000000000000000"
 #max_single_deposit_value = "1000000000000000000"
 
@@ -31,6 +31,6 @@ required_signatures = 1
 [transactions]
 home_deploy = { gas = 3000000, gas_price = 1000000000 }
 foreign_deploy = { gas = 3000000, gas_price = 5000000000 }
-deposit_relay = { gas = 300000, gas_price = 5000000000 }
-withdraw_confirm = { gas = 300000, gas_price = 5000000000 }
+deposit_relay = { gas = 300000, gas_price = 18000000000 }
+withdraw_confirm = { gas = 300000, gas_price = 18000000000 }
 withdraw_relay = { gas = 300000, gas_price = 1000000000 }
