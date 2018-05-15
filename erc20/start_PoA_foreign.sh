@@ -2,7 +2,6 @@
 
 PARITY_BASE="/home/koal/poa"
 TASK="PoA_foreign"
-RUNNER="parity_${TASK}.sh"
 PARITY_CONFIG="${TASK}.toml"
 TASK_WORK_DIR="${PARITY_BASE}/${TASK}"
 
