@@ -1,0 +1,28 @@
+[parity]
+chain = "kovan"
+base_path = "/home/koal/poa/kovan"
+keys_path = "./keys"
+
+[network]
+port = 30343
+nat = "none"
+
+[rpc]
+port = 48545
+apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+cors = ["all"]
+hosts = ["all"]
+
+[ipc]
+apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "parity_accounts", "traces", "rpc", "shh", "shh_pubsub", "personal"]
+
+[ui]
+port = 48180
+force = true
+
+[websockets]
+port = 48546
+
+[account]
+unlock = ["0xf3ee321df87781864f46f6464e764c2827fca73b"]
+password = ["./keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
