@@ -1,9 +1,15 @@
 #!/bin/bash
 
-PARITY_BASE="/home/koal/parity"
-RUNNER="parity_PoA_foreign.sh"
+PARITY_BASE="/home/koal/poa"
 TASK="PoA_foreign"
+RUNNER="parity_${TASK}.sh"
+PARITY_CONFIG="${TASK}.toml"
+TASK_WORK_DIR="${PARITY_BASE}/${TASK}"
 
-cd ${PARITY_BASE}/${TASK}
+#DEBUG_RPC='-l rpc=trace'
+#EXTRA_CONFIG='--jsonrpc-hosts="all" --jsonrpc-cors null'
 
-exec screen -d -m -U -t "${TASK}" -S "${TASK}.screen" -h 5000 -L -s ${PARITY_BASE}/${RUNNER}
+configdir=`dirname $0`
+cd ${configdir}
+
+source start_common.sh

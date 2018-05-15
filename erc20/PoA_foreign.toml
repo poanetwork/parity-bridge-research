@@ -1,7 +1,7 @@
 [parity]
-chain = "/home/koal/parity/PoA_foreign.json"
-base_path = "/home/koal/parity/PoA_foreign"
-keys_path = "/home/koal/parity/keys"
+chain = "PoA_foreign.json"
+base_path = "/home/koal/poa/PoA_foreign"
+keys_path = "./keys"
 
 [network]
 port = 30343
@@ -25,7 +25,7 @@ port = 48546
 
 [account]
 unlock = ["0xf3ee321df87781864f46f6464e764c2827fca73b"]
-password = ["/home/koal/parity/keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
+password = ["./keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
 
 [mining]
 engine_signer = "0xf3ee321df87781864f46f6464e764c2827fca73b"

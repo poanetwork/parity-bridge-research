@@ -1,7 +1,7 @@
 [parity]
-chain = "/home/koal/parity/PoA_home.json"
-base_path = "/home/koal/parity/PoA_home"
-keys_path = "/home/koal/parity/keys"
+chain = "PoA_home.json"
+base_path = "/home/koal/poa/PoA_home"
+keys_path = "./keys"
 
 [network]
 port = 30333
@@ -25,7 +25,7 @@ port = 38546
 
 [account]
 unlock = ["0x842eb2142c5aa1260954f07aae39ddee1640c3a7"]
-password = ["/home/koal/parity/keys/passwd/home_842eb2142c5aa1260954f07aae39ddee1640c3a7.pwd"]
+password = ["./keys/passwd/home_842eb2142c5aa1260954f07aae39ddee1640c3a7.pwd"]
 
 [mining]
 engine_signer = "0x842eb2142c5aa1260954f07aae39ddee1640c3a7"
