@@ -1,7 +1,7 @@
 [parity]
 chain = "ropsten"
-base_path = "/opt/storage/Ropsten"
-keys_path = "/home/koal/parity/keys"
+base_path = "/home/koal/poa/test"
+keys_path = "./keys"
 
 [network]
 port = 30343
@@ -25,4 +25,4 @@ port = 48546
 
 [account]
 unlock = ["0xf3ee321df87781864f46f6464e764c2827fca73b"]
-password = ["/home/koal/parity/keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
+password = ["./keys/passwd/foreign_f3ee321df87781864f46f6464e764c2827fca73b.pwd"]
