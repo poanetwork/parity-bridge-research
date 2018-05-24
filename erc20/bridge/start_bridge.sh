@@ -3,8 +3,13 @@
 BRIDGE_BASE="/home/koal/git-repos/parity-bridge-research/erc20/bridge"
 TASK="PoA_bridge"
 BRIDGE_BIN="./bridge"
-CONFIG="sokol_ropsten_config_rpc.toml"
-DATABASE="sokol_ropsten_db.toml"
+
+if [ -f "./.env" ]; then
+    source "./.env"
+else
+    CONFIG="sokol_ropsten_config_rpc.toml"
+    DATABASE="sokol_ropsten_db.toml"
+fi
 
 TASK_WORK_DIR="${BRIDGE_BASE}"
 

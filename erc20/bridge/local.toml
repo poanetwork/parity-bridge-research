@@ -1,0 +1,35 @@
+keystore = "./keys"
+
+[home]
+account = "0xd6d713a71eb3955c680d5967e9bb22298edefcc3"
+required_confirmations = 0
+poll_interval = 5
+request_timeout = 360
+rpc_host = "http://127.0.0.1"
+rpc_port = 38545 
+password = "./keys/d6d713a71eb3955c680d5967e9bb22298edefcc3.pwd"
+default_gas_price = 1000000000
+
+[foreign]
+account = "0xd6d713a71eb3955c680d5967e9bb22298edefcc3"
+required_confirmations = 0
+poll_interval = 5
+request_timeout = 360
+rpc_host = "http://127.0.0.1"
+rpc_port = 48545
+password = "./keys/d6d713a71eb3955c680d5967e9bb22298edefcc3.pwd"
+default_gas_price = 21000000000
+gas_price_oracle_url = "https://gasprice.poa.network/"
+gas_price_speed_type = "fast"
+gas_price_timeout = 10
+
+[authorities]
+accounts = [
+        "0xd6d713a71eb3955c680d5967e9bb22298edefcc3"
+]
+required_signatures = 1
+
+[transactions]
+deposit_relay = { gas = 300000, concurrency = 100 }
+withdraw_confirm = { gas = 300000, concurrency = 100 }
+withdraw_relay = { gas = 300000, concurrency = 100 }
