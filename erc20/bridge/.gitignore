@@ -1,3 +1,5 @@
 bridge
 bridge.master
 screenlog.1
+*db.toml*
+.env
