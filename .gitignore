@@ -1,1 +1,4 @@
 **/address_book.json
+**/dapps_history.json
+**/*.swp
+**/__pycache__
