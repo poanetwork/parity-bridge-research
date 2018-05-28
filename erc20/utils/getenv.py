@@ -9,6 +9,8 @@ from json import load as jload
 from utils.web3 import (
     toChecksumAddress,
     connectionToRPCProvider,
+    decryptPrivateKey,
+    initContractAtAddress,
 )
 
 class BridgeEnv():
@@ -16,8 +18,8 @@ class BridgeEnv():
     def _fromEnv(self):
         self.home_rpc_provider = getenv("HOME_RPC_URL")
         self.foreign_rpc_provider = getenv("FOREIGN_RPC_URL")
-        self.home_bridge = toChecksumAddress(getenv("HOME_BRIDGE_ADDRESS"))
-        self.foreign_bridge = toChecksumAddress(getenv("FOREIGN_BRIDGE_ADDRESS"))
+        self.home_bridge_address = toChecksumAddress(getenv("HOME_BRIDGE_ADDRESS"))
+        self.foreign_bridge_address = toChecksumAddress(getenv("FOREIGN_BRIDGE_ADDRESS"))
         self.validator = toChecksumAddress(getenv("VALIDATOR_ADDRESS"))
 
         return True
@@ -33,8 +35,8 @@ class BridgeEnv():
         except:
             return False
         
-        self.home_bridge = toChecksumAddress(db["home_contract_address"])
-        self.foreign_bridge = toChecksumAddress(db["foreign_contract_address"])
+        self.home_bridge_address = toChecksumAddress(db["home_contract_address"])
+        self.foreign_bridge_address = toChecksumAddress(db["foreign_contract_address"])
 
         return True
 
@@ -50,6 +52,24 @@ class BridgeEnv():
 
         return True
 
+    def activateActor(self):
+        self.actor = decryptPrivateKey(
+            self.test_env["actor_keystore"],
+            self.test_env["actor_pwd"]
+        )
+        if not (self.actor_address == self.actor.address):
+            print("It seems that keystore corrupted")
+        return self.actor
+    
+    def initHomeBridgeContact(self):
+        self.home_bridge = None
+        if self.home_channel:
+            self.home_bridge = initContractAtAddress(
+                self.home_channel,
+                self.test_env["home_bridge_abi"],
+                self.home_bridge_address
+            )
+        self.home_bridge
 
     def initEnv(self, _environment=None):
         if _environment:
