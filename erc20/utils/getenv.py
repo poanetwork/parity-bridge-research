@@ -69,7 +69,26 @@ class BridgeEnv():
                 self.test_env["home_bridge_abi"],
                 self.home_bridge_address
             )
-        self.home_bridge
+
+    def initForeignBridgeContact(self):
+        self.foreign_bridge = None
+        if self.foreign_channel:
+            self.foreign_bridge = initContractAtAddress(
+                self.foreign_channel,
+                self.test_env["foreign_bridge_abi"],
+                self.foreign_bridge_address
+            )
+
+    def initForeignTokenContract(self):
+        self.foreign_token = None
+        self.foreign_token_address = None
+        if (self.foreign_channel) and (self.foreign_bridge):
+            self.foreign_token_address = self.foreign_bridge.functions.erc677token().call()
+            self.foreign_token = initContractAtAddress(
+                self.foreign_channel,
+                self.test_env["foreign_token_abi"],
+                self.foreign_token_address
+            )
 
     def initEnv(self, _environment=None):
         if _environment:
