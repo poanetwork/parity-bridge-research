@@ -61,7 +61,7 @@ class BridgeEnv():
             print("It seems that keystore corrupted")
         return self.actor
     
-    def initHomeBridgeContact(self):
+    def initHomeBridgeContract(self):
         self.home_bridge = None
         if self.home_channel:
             self.home_bridge = initContractAtAddress(
@@ -70,7 +70,7 @@ class BridgeEnv():
                 self.home_bridge_address
             )
 
-    def initForeignBridgeContact(self):
+    def initForeignBridgeContract(self):
         self.foreign_bridge = None
         if self.foreign_channel:
             self.foreign_bridge = initContractAtAddress(

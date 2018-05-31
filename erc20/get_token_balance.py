@@ -29,13 +29,13 @@ b.initEnv()
 
 if direction == "h":
     web3 = b.connectionToHome()
-    b.initHomeBridgeContact()
+    b.initHomeBridgeContract()
     b.initHomeTokenContract()
     token_contract = b.home_token
     bridge_address = b.home_bridge_address
 else:
     web3 = b.connectionToForeign()
-    b.initForeignBridgeContact()
+    b.initForeignBridgeContract()
     b.initForeignTokenContract()
     token_contract = b.foreign_token
     bridge_address = b.foreign_bridge_address

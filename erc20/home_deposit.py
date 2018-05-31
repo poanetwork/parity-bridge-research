@@ -23,7 +23,7 @@ b = BridgeEnv()
 b.initEnv()
 
 web3 = b.connectionToHome()
-b.initHomeBridgeContact()
+b.initHomeBridgeContract()
 
 gas_price = b.home_bridge.functions.gasPrice().call()
 gas_limit = 50000
