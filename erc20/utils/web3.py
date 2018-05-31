@@ -29,6 +29,9 @@ def initContractAtAddress(_web3, _file, _address):
         contract_abi = jload(f)
     f.close()
 
+    if type(contract_abi) == dict:
+        contract_abi = contract_abi['abi']
+
     contract_factory = _web3.eth.contract(
         abi = contract_abi,
     )
