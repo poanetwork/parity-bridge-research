@@ -29,8 +29,6 @@ gas_price = b.home_bridge.functions.gasPrice().call()
 gas_limit = 50000
 net_id = int(web3.version.network)
 
-op_num = web3.eth.getTransactionCount(b.actor_address)
-
 tx_templ = {
              'to': b.home_bridge_address,
              'gas': gas_limit,
@@ -43,6 +41,11 @@ op_num = web3.eth.getTransactionCount(actor.address)
 
 if tx_value == None:
     tx_value = b.home_bridge.functions.minPerTx().call()
+
+balance_needed  = ((gas_price * gas_limit + tx_value) * tx_num)
+balance_current = web3.eth.getBalance(actor.address)
+if balance_needed > balance_current:
+    exit(f'{actor.address} balance is lower than needed ({balance_needed} > {balance_current})')
 
 ################################################################################
 # Preparing batch of transactions to the bridge contract with ether sending
