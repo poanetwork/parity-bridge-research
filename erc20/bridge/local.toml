@@ -20,7 +20,7 @@ rpc_port = 48545
 password = "./keys/d6d713a71eb3955c680d5967e9bb22298edefcc3.pwd"
 default_gas_price = 21000000000
 gas_price_oracle_url = "https://gasprice.poa.network/"
-gas_price_speed_type = "fast"
+gas_price_speed = "fast"
 gas_price_timeout = 10
 
 [authorities]
