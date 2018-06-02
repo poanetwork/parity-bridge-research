@@ -20,7 +20,7 @@ else:
         exit("Incorrect number of input parameters")
 
 b = BridgeEnv()
-b.initEnv('bridge/test_env_db.local.toml')
+b.initEnv()
 
 web3 = b.connectionToForeign()
 b.initForeignBridgeContract()
@@ -35,11 +35,6 @@ if tx_value == None:
 
 data = b.foreign_token.encodeABI('transferAndCall', (b.foreign_bridge_address, tx_value, b''))
 
-b.foreign_token.functions
-
-print(data)
-
-#'to': b.foreign_token_address,
 tx_templ = {
              'to': b.foreign_token_address,
              'gas': gas_limit,
@@ -53,7 +48,7 @@ actor = b.activateActor()
 op_num = web3.eth.getTransactionCount(actor.address)
 
 ################################################################################
-# Preparing batch of transactions to the bridge contract with ether sending
+# Preparing batch of transactions to the bridge contract with tokens withdrawals
 ################################################################################
 
 tx_signed = []
@@ -75,12 +70,3 @@ for tx in tx_signed:
     print('TX:', txHash.hex())
 
 exit(0)
-
-#txToSend = TokenContract.functions.approveAndCall(bridgeContractAddress, value, b'').buildTransaction(txTmpl)
-
-# This is needed since sendTransaction does not expect this argument parameter and does not skip it by some reason 
-#txToSend.pop('chainId', None)
-
-#txHash = web3.personal.sendTransaction(txToSend, "11")
-
-sys.exit(0)
