@@ -1,75 +1,86 @@
 #!/opt/anaconda3/bin/python
 
-from web3 import Web3
-from web3.utils.transactions import wait_for_transaction_receipt
-import json
-from toml import load
-import sys
-from random import randint
+from utils.getenv import BridgeEnv
+from sys import argv, exit
+from utils.web3 import fromEther, toEther
 
-_tokenName = 'BridgeableToken'
-_abiFile = _tokenName+".abi"
+tx_num = 1
+tx_value = None
 
-test_env_db = '/home/koal/parity/bridge/test_env_db.toml'
-try:
-    test_env = load(test_env_db)
-except:
-    sys.exit(1)
-
-bridge_config = load(test_env['bridge_config'])
-bridge_db     = load(test_env['bridge_db'])
-
-_IPC_file = bridge_config['foreign']['ipc']
-web3 = Web3(Web3.IPCProvider(_IPC_file))
-#web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:48545"))
-
-_gasPrice    = bridge_config['transactions']['withdraw_confirm']['gas_price']
-
-tokenContractAddress = web3.toChecksumAddress(test_env['token_contract_address'])
-
-bridgeContractAddress = web3.toChecksumAddress(bridge_db['foreign_contract_address'])
-
-if 'actor_address' in test_env:
-    actor = web3.toChecksumAddress(test_env['actor_address'])
+# The command can be used with 2 parameters:
+# #1 - number of transactions
+# #2 - value to withdraw
+if (len(argv) == 2):
+    tx_num = int(argv[1])
 else:
-    sys.exit("actor is not set in testenv DB")
+    if (len(argv) == 3):
+         tx_num = int(argv[1])
+         tx_value = fromEther(float(argv[2]))
+    elif (len(argv) != 1):
+        exit("Incorrect number of input parameters")
 
-#----------------------------------------------------------------------------
-# Read ABI
-#----------------------------------------------------------------------------
-with open(_abiFile) as f:
-    _contractABI=json.load(f)
-f.close()
-#print(_contractABI[0])
+b = BridgeEnv()
+b.initEnv('bridge/test_env_db.local.toml')
 
-ContractFactory = web3.eth.contract(
-    abi = _contractABI,
-)
+web3 = b.connectionToForeign()
+b.initForeignBridgeContract()
+b.initForeignTokenContract()
 
-#############################################################################
-# MAIN PART STARTED HERE
-#############################################################################
+gas_price = b.foreign_bridge.functions.gasPrice().call()
+gas_limit = 120000
+net_id = int(web3.version.network)
 
-TokenContract = ContractFactory(tokenContractAddress)
+if tx_value == None:
+    tx_value = b.foreign_bridge.functions.minPerTx().call()
 
-balance = TokenContract.functions.balanceOf(actor).call()
-value = randint(balance // 4, balance // 2)
+data = b.foreign_token.encodeABI('transferAndCall', (b.foreign_bridge_address, tx_value, b''))
 
-print("Withdraw", value, "from Foreign bridge")
+b.foreign_token.functions
 
-#web3.personal.unlockAccount(actor, "11", "0x5")
+print(data)
 
-txTmpl = {'from': actor, 
-          'gasPrice': _gasPrice}
+#'to': b.foreign_token_address,
+tx_templ = {
+             'to': b.foreign_token_address,
+             'gas': gas_limit,
+             'gasPrice': gas_price,
+             'chainId': net_id,
+             'value': 0,
+             'data': data
+           }
 
-txToSend = TokenContract.functions.approveAndCall(bridgeContractAddress, value, b'').buildTransaction(txTmpl)
+actor = b.activateActor()
+op_num = web3.eth.getTransactionCount(actor.address)
+
+################################################################################
+# Preparing batch of transactions to the bridge contract with ether sending
+################################################################################
+
+tx_signed = []
+
+for i in range(0, tx_num):
+    tx = tx_templ.copy()
+    tx['nonce'] = op_num + i
+
+    signed = actor.signTransaction(tx)
+    tx_signed.append(signed)
+    print('NOnce:', tx['nonce'], 'value:', toEther(tx_value))
+
+################################################################################
+# Sending batch of transactions
+################################################################################
+
+for tx in tx_signed: 
+    txHash = web3.eth.sendRawTransaction(tx.rawTransaction)
+    print('TX:', txHash.hex())
+
+exit(0)
+
+#txToSend = TokenContract.functions.approveAndCall(bridgeContractAddress, value, b'').buildTransaction(txTmpl)
 
 # This is needed since sendTransaction does not expect this argument parameter and does not skip it by some reason 
-txToSend.pop('chainId', None)
+#txToSend.pop('chainId', None)
 
-txHash = web3.personal.sendTransaction(txToSend, "11")
-wait_for_transaction_receipt(web3, txHash)
-
-print("TX:", txHash.hex())
+#txHash = web3.personal.sendTransaction(txToSend, "11")
 
 sys.exit(0)
