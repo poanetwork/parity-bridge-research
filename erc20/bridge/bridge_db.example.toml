@@ -1,0 +1,5 @@
+home_contract_address = "0xcafecafecafecafecafecafecafecafecafecafe"
+foreign_contract_address = "0xcafecafecafecafecafecafecafecafecafecafe"
+checked_deposit_relay = 1
+checked_withdraw_relay = 2
+checked_withdraw_confirm = 2

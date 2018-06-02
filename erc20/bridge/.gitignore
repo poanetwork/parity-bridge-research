@@ -1,5 +1,8 @@
 bridge
-bridge.master
+bridge.*
 screenlog.1
 *db.toml*
-.env
+test_env_db.*
+!test_env_db.example.toml
+.env*
+!.env.example

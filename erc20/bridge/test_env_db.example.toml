@@ -1,0 +1,10 @@
+#bridge_config="./.env"
+bridge_config="./local.toml"
+bridge_db="./local_db.toml"
+
+actor_keystore="./keys/keystore.json"
+actor_pwd="pa55w0rd"
+
+home_bridge_abi="./HomeBridge.json"
+foreign_bridge_abi="./contracts/ForeignBridge.json"
+foreign_token_abi="./contracts/POA20.json"

@@ -94,7 +94,7 @@ class BridgeEnv():
         if _environment:
             f = _environment
         else:
-            f = 'bridge/test_env_db.toml'
+            f = getenv("BRIDGE_TEST_ENV", 'bridge/test_env_db.toml')
 
         try:
             self.test_env = load(f)
